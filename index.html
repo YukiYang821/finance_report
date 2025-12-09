@@ -3,12 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>量子金融算法调研</title>
+    <title>量子金融算法调研展示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* 基础样式 - 等会会被styles.css替换 */
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        .navbar { background: #0d1117; color: white; padding: 1rem; display: flex; justify-content: space-between; border-radius: 10px; margin-bottom: 2rem; }
+        .nav-brand { font-size: 1.2rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 1rem; }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; }
+        .nav-links a:hover { background: rgba(255,255,255,0.1); }
+        section { margin-bottom: 3rem; }
+        h1, h2, h3 { color: #1a73e8; }
+        .case-study { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .paper-info { background: #f0f7ff; padding: 1rem; border-radius: 8px; border-left: 4px solid #1a73e8; margin: 1rem 0; }
+        .flow-step { background: #f8f9fa; border: 2px solid #1a73e8; padding: 1rem; margin: 1rem 0; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background: #1a73e8; color: white; }
+        tr:hover { background: #f5f7fa; }
+        footer { text-align: center; padding: 2rem; color: #666; margin-top: 3rem; }
+    </style>
 </head>
 <body>
-    <h1>量子金融算法调研网站</h1>
-    <p>建设中...</p>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-brand">量子金融算法调研</div>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#superconducting">超导量子计算</a>
+            <a href="#comparison">对比分析</a>
+            <a href="#references">参考文献</a>
+        </div>
+    </nav>
+
+    <!-- 首页 -->
+    <section id="home">
+        <h1><i class="fas fa-atom"></i> 量子计算在金融优化中的应用调研</h1>
+        <p>本网站展示两种量子计算方案解决金融优化问题的研究成果</p>
+        <div style="margin-top: 2rem; padding: 1rem; background: #e8f4ff; border-radius: 8px;">
+            <h3>研究重点</h3>
+            <ul>
+                <li>动态投资组合优化的量子解决方案</li>
+                <li>超导量子计算(VQE)与相干伊辛机(CIM)对比</li>
+                <li>金融问题到量子算法的完整映射过程</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 超导量子计算案例 -->
+    <section id="superconducting" class="case-study">
+        <h2><i class="fas fa-microchip"></i> 案例一：超导量子计算 (VQE)</h2>
+        <div class="paper-info">
+            <h3>对应论文</h3>
+            <p><strong>标题：</strong>Scaling the Variational Quantum Eigensolver for Dynamic Portfolio Optimization</p>
+            <p><strong>作者：</strong>A. Nodar et al.</p>
+            <p><strong>发表：</strong>arXiv, 2024</p>
+            <p><strong>硬件：</strong>IBM Torino (133超导量子比特)</p>
+        </div>
+
+        <div class="section">
+            <h3>1. 金融问题 → 数学问题</h3>
+            <div class="flow-step">
+                <h4>动态投资组合优化 (DPO)</h4>
+                <p>在多个时间点上调整资产配置，最大化收益、最小化风险，同时考虑交易成本。</p>
+                <p><strong>核心挑战：</strong>多时间点优化产生维度灾难。</p>
+            </div>
+            <div class="flow-step">
+                <h4>目标函数</h4>
+                <p>\[O(\Omega) = F(\Omega) - \frac{\gamma}{2}R(\Omega) - C(\Omega)\]</p>
+                <p>其中：\(F\)=期望收益，\(R\)=风险，\(C\)=交易成本，\(\gamma\)=风险厌恶系数</p>
+            </div>
+            <div class="flow-step">
+                <h4>QUBO问题</h4>
+                <p>\[Q = \sum_{i,j} Q_{ij}x_i x_j\]</p>
+                <p>通过二进制变量编码投资金额，将连续优化转化为离散优化。</p>
+            </div>
+            <div class="flow-step">
+                <h4>Ising模型</h4>
+                <p>\[H = \sum_i h_i Z_i + \sum_{i<j} J_{ij} Z_i Z_j\]</p>
+                <p>QUBO到Ising模型的转换，使问题可在量子硬件上求解。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>2. 数学问题 → 量子算法</h3>
+            <div class="flow-step">
+                <h4>变分量子本征求解器 (VQE)</h4>
+                <pre style="background: #2c3e50; color: white; padding: 1rem; border-radius: 5px; overflow-x: auto;">
+初始化参数 θ
+    ↓
+构建量子电路 |ψ(θ)⟩
+    ↓
+测量期望值 ⟨ψ(θ)|H|ψ(θ)⟩
+    ↓
+经典优化器更新 θ
+    ↓
+收敛？ → 是 → 输出最优解
+    ↓
+否
+    ↻</pre>
+                <p>VQE通过参数化量子电路和经典优化器的协同工作寻找基态。</p>
+            </div>
+            <div class="flow-step">
+                <h4>关键创新点</h4>
+                <ul>
+                    <li><strong>定制化Ansatz：</strong>根据IBM Torino硬件连通性设计，减少SWAP门</li>
+                    <li><strong>差分进化优化器：</strong>梯度无关，抗噪声能力强，避免barren plateaus</li>
+                    <li><strong>大规模扩展：</strong>从6量子比特扩展到112量子比特，突破100量子比特实用前沿</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>3. 硬件实现与结果</h3>
+            <div class="flow-step">
+                <h4>IBM Torino量子处理器</h4>
+                <ul>
+                    <li><strong>量子比特数：</strong>133个超导量子比特</li>
+                    <li><strong>连接性：</strong>Hexagonal lattice结构</li>
+                    <li><strong>原生门集：</strong>RX, RZ, CNOT</li>
+                    <li><strong>相干时间：</strong>~100μs</li>
+                    <li><strong>读取保真度：</strong>~95%</li>
+                </ul>
+            </div>
+            <div class="flow-step">
+                <h4>实验结果</h4>
+                <table>
+                    <tr><th>规模</th><th>时间点</th><th>资产数</th><th>量子比特</th><th>优化成本</th><th>vs经典</th></tr>
+                    <tr><td>XS</td><td>2</td><td>3</td><td>6</td><td>-1.99</td><td>100%</td></tr>
+                    <tr><td>S</td><td>5</td><td>4</td><td>20</td><td>-5.04</td><td>99.8%</td></tr>
+                    <tr><td>M</td><td>7</td><td>4</td><td>28</td><td>-7.14</td><td>100%</td></tr>
+                    <tr><td>L</td><td>4</td><td>7</td><td>56</td><td>-4.08</td><td>96.2%</td></tr>
+                    <tr><td>XL</td><td>4</td><td>7</td><td>84</td><td>-4.00</td><td>94.1%</td></tr>
+                    <tr><td>XXL</td><td>4</td><td>7</td><td>112</td><td>-4.00</td><td>94.1%</td></tr>
+                </table>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">注：优化成本越低越好，vs经典表示相比Gurobi经典优化器的性能百分比。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 对比分析 -->
+    <section id="comparison" class="case-study">
+        <h2><i class="fas fa-balance-scale"></i> 超导量子计算 vs 相干伊辛机</h2>
+        <table>
+            <tr><th>对比维度</th><th>超导量子计算</th><th>相干伊辛机(CIM)</th></tr>
+            <tr><td><strong>硬件平台</strong></td><td>IBM Torino超导芯片</td><td>光学参量振荡器阵列</td></tr>
+            <tr><td><strong>工作原理</strong></td><td>约瑟夫森结，微波控制</td><td>光学非线性效应，脉冲相位同步</td></tr>
+            <tr><td><strong>算法核心</strong></td><td>VQE (变分量子本征求解器)</td><td>量子退火/伊辛求解</td></tr>
+            <tr><td><strong>问题映射</strong></td><td>QUBO → Ising模型</td><td>MVO → Ising模型</td></tr>
+            <tr><td><strong>可扩展性</strong></td><td>100+量子比特</td><td>10000+脉冲</td></tr>
+            <tr><td><strong>连接性</strong></td><td>有限连接（需SWAP门）</td><td>全连接网络</td></tr>
+            <tr><td><strong>抗噪能力</strong></td><td>需要纠错，对噪声敏感</td><td>天然抗噪，光学系统稳定</td></tr>
+            <tr><td><strong>能耗</strong></td><td>高（需要超低温~15mK）</td><td>低（光学计算）</td></tr>
+            <tr><td><strong>成熟度</strong></td><td>较高，有多家商业公司</td><td>较低，主要在研究阶段</td></tr>
+            <tr><td><strong>适合问题</strong></td><td>参数化优化，中等规模</td><td>大规模组合优化</td></tr>
+        </table>
+
+        <div class="flow-step" style="margin-top: 2rem;">
+            <h4>总结</h4>
+            <ul>
+                <li><strong>超导量子计算</strong>适合需要精细控制、参数优化的中小规模问题</li>
+                <li><strong>相干伊辛机</strong>适合大规模、全连接的组合优化问题</li>
+                <li>两者都展示了在金融优化问题中的量子优势，但适用场景不同</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 参考文献 -->
+    <section id="references" class="case-study">
+        <h2><i class="fas fa-book"></i> 参考文献</h2>
+        <div class="flow-step">
+            <ol>
+                <li>Nodar, A. et al. (2024). <em>Scaling the Variational Quantum Eigensolver for Dynamic Portfolio Optimization</em>. arXiv preprint.</li>
+                <li>Mugel, S. et al. (2022). <em>Dynamic portfolio optimization with real datasets using quantum processors and quantum-inspired tensor networks</em>. Physical Review Research.</li>
+                <li>IBM Quantum (2023). <em>IBM Debuts Next-Generation Quantum Processor & IBM Quantum System Two</em>.</li>
+                <li>Rosenberg, G. et al. (2016). <em>Solving the Optimal Trading Trajectory Problem Using a Quantum Annealer</em>. IEEE Journal of Selected Topics in Signal Processing.</li>
+                <li>Wang, S. et al. (2024). <em>Variational quantum eigensolver with linear depth problem-inspired ansatz for solving portfolio optimization in finance</em>. arXiv preprint.</li>
+            </ol>
+        </div>
+    </section>
+
+    <footer>
+        <p>量子金融算法调研网站 © 2024 | 基于GitHub Pages部署 | 最后更新: 2024年12月</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+            <a href="https://github.com/YukiYang821/finance_report" style="color: #1a73e8;">查看源代码</a> |
+            <a href="https://yukiyang821.github.io/finance_report/" style="color: #1a73e8;">访问网站</a>
+        </p>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
