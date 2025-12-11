@@ -1445,3 +1445,6 @@ footer {
     font-size: 1.6em;      /* 非常大 */
     font-weight: 800;
 }
+.point-number {
+    font-size: 20px; /* 调整为更大的值 */
+}

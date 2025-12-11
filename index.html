@@ -623,7 +623,7 @@
                             <div class="formula-detail">
                                 \[ R(\boldsymbol{\Omega}) = \sum_{t=0}^{N_t-1} \boldsymbol{\omega}_t^T \Sigma_t \boldsymbol{\omega}_t \]
                             </div>
-                            <p>where \(\Sigma_t\) is the \(N_a \times N_a\) covariance matrix of logarithmic returns at time \(t\). The risk aversion coefficient \(\gamma=1000\) ensures comparable magnitude between return and risk.</p>
+                            <p>where \(\Sigma_t\) is the \(N_a \times N_a\) covariance matrix of logarithmic returns at time \(t\). The risk aversion coefficient \(\gamma\) ensures comparable magnitude between return and risk.</p>
 
                             <div class="risk-models">
                                 <h5 class="step-title-large">Risk Modeling Alternatives:</h5>
@@ -643,7 +643,7 @@
                             <div class="formula-detail">
                                 \[ C(\boldsymbol{\Omega}) = \nu \sum_{t=0}^{N_t-1} \sum_{a=0}^{N_a-1} |\omega_{t,a} - \omega_{t-1,a}| \]
                             </div>
-                            <p>with initial condition \(\omega_{-1,a} = 0\). Transaction fee rate \(\nu = 1\%\).</p>
+                            <p>where \(\nu \) is transaction fee rate, \(\omega_{-1,a} = 0\) is initial condition.</p>
                         </div>
                     </div>
 
@@ -710,7 +710,7 @@
                             <div class="formula-detail">
                                 \[ C(\tilde{\boldsymbol{\Omega}}) = \nu\lambda \sum_{t=0}^{N_t-1} \sum_{a=0}^{N_a-1} (\tilde{\omega}_{t,a} - \tilde{\omega}_{t-1,a})^2 \]
                             </div>
-                            <p>where \(\lambda = \sqrt[3]{2}K/K'\) minimizes the approximation error. This transformation preserves the essential properties while enabling QUBO formulation.</p>
+                            <p>where \(\lambda\) is a parameter introduced to adjust the quadratic difference between weights at different times. This transformation preserves the essential properties while enabling QUBO formulation.</p>
                         </div>
                     </div>
 
@@ -722,7 +722,7 @@
                             <div class="formula-detail">
                                 \[ B(\tilde{\boldsymbol{\Omega}}) = \rho \sum_{t=0}^{N_t-1} \left( \sum_{a=0}^{N_a-1} \tilde{\omega}_{t,a} - 1 \right)^2 \]
                             </div>
-                            <p>with Lagrange multiplier \(\rho = 1\) balancing constraint enforcement and original objective optimization.</p>
+                            <p>with Lagrange multiplier \(\rho\) balancing constraint enforcement and original objective optimization.</p>
                         </div>
                     </div>
 
@@ -834,75 +834,7 @@
                         </div>
                     </div>
 
-                    <div class="workflow-step-item">
-                        <div class="step-number-circle">3</div>
-                        <div class="step-content-expanded">
-                            <h4 class="step-title-large">QUBO Matrix Structure Analysis</h4>
-                            <p>The QUBO matrix exhibits distinct structural patterns:</p>
-                            <div class="structure-points">
-                                <div class="structure-point">
-                                    <i class="fas fa-th-large"></i>
-                                    <h5 class="step-title-large">Block-Diagonal Dominance</h5>
-                                    <p>Strong intra-block coupling within each time step due to covariance terms</p>
-                                </div>
-                                <div class="structure-point">
-                                    <i class="fas fa-link"></i>
-                                    <h5 class="step-title-large">Sparse Inter-Block Connections</h5>
-                                    <p>Weak coupling between adjacent time steps from transaction costs</p>
-                                </div>
-                                <div class="structure-point">
-                                    <i class="fas fa-sliders-h"></i>
-                                    <h5 class="step-title-large">Wide Dynamic Range</h5>
-                                    <p>Matrix elements span several orders of magnitude, posing precision challenges for quantum hardware</p>
-                                </div>
-                            </div>
 
-
-                            <div class="matrix-visualization">
-    <h5 class="step-title-large">QUBO Matrix Structure Pattern:</h5>
-    <div class="matrix-pattern">
-        <div class="pattern-row">
-            <span class="matrix-element strong">Q₀₀</span>
-            <span class="matrix-element weak">Q₀₁</span>
-            <span class="matrix-element zero">Q₀₂</span>
-            <span class="matrix-element zero">Q₀₃</span>
-        </div>
-        <div class="pattern-row">
-            <span class="matrix-element weak">Q₁₀</span>
-            <span class="matrix-element strong">Q₁₁</span>
-            <span class="matrix-element weak">Q₁₂</span>
-            <span class="matrix-element zero">Q₁₃</span>
-        </div>
-        <div class="pattern-row">
-            <span class="matrix-element zero">Q₂₀</span>
-            <span class="matrix-element weak">Q₂₁</span>
-            <span class="matrix-element strong">Q₂₂</span>
-            <span class="matrix-element weak">Q₂₃</span>
-        </div>
-        <div class="pattern-row">
-            <span class="matrix-element zero">Q₃₀</span>
-            <span class="matrix-element zero">Q₃₁</span>
-            <span class="matrix-element weak">Q₃₂</span>
-            <span class="matrix-element strong">Q₃₃</span>
-        </div>
-    </div>
-    <div class="matrix-legend">
-        <div class="legend-item">
-            <span class="legend-color strong"></span>
-            <span class="legend-text">Strong diagonal blocks (intra-temporal covariance)</span>
-        </div>
-        <div class="legend-item">
-            <span class="legend-color weak"></span>
-            <span class="legend-text">Weak off-diagonal blocks (inter-temporal transaction costs)</span>
-        </div>
-        <div class="legend-item">
-            <span class="legend-color zero"></span>
-            <span class="legend-text">Zero coupling (non-adjacent time steps)</span>
-        </div>
-    </div>
-</div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -924,7 +856,7 @@
                             <div class="step-icon">②</div>
                             <div class="step-content">
                                 <h5 class="step-title-large">Continuous Optimization</h5>
-                                <p>Maximize \(O(\boldsymbol{\Omega}) = F(\boldsymbol{\Omega}) - \frac{\gamma}{2}R(\boldsymbol{\Omega}) - C(\boldsymbol{\Omega})\) subject to constraints</p>
+                                <p>Maximize \(O(\boldsymbol{\Omega})\) \(= F(\boldsymbol{\Omega}) - \frac{\gamma}{2}R(\boldsymbol{\Omega}) - C(\boldsymbol{\Omega})\) subject to constraints</p>
                             </div>
                         </div>
                         <div class="pathway-step">
@@ -1077,7 +1009,7 @@
             <h5 class="step-title-large">Technical Specifications:</h5>
             <div class="spec-grid">
                 <div class="spec-card">
-                    <i class="fas fa-quantum-circuit"></i>
+                    <i class="fas fa-bolt"></i>
                     <h5 class="step-title-large">Qubit Architecture</h5>
                     <p><strong>133 superconducting transmon qubits</strong> arranged in a hexagonal lattice with heavy-hex connectivity</p>
                 </div>
@@ -1092,7 +1024,7 @@
                     <p>Average gate fidelity: <strong>99.9%</strong>, Coherence times: T₁ ~ 100μs, T₂ ~ 150μs</p>
                 </div>
                 <div class="spec-card">
-                    <i class="fas fa-gate"></i>
+                    <i class="fas fa-temperature-low"></i>
                     <h5 class="step-title-large">Native Gate Set</h5>
                     <p>√X, RZ, ECR (echoed cross-resonance) as native two-qubit gate</p>
                 </div>
@@ -1346,7 +1278,7 @@
                                         <div class="point-number">3</div>
                                         <div class="point-content">
                                             <h5 class="step-title-large">Matrix Structure</h5>
-                                            <p>QUBO matrix has strong intra-block diagonal terms and weak inter-block off-diagonal terms</p>
+                                            <p>QUBO matrix has strong intra-block diagonal terms and weak inter-block off-diagonal terms.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1491,7 +1423,7 @@
 
                             <div class="strategy-card strategy-4">
                                 <div class="strategy-header">
-                                    <h5 class="step-title-large">Strategy 4: BCD Only</h5>
+                                    <h5 class="step-title-large">Strategy 4: Only BCD</h5>
                                     <span class="strategy-label good">Good</span>
                                 </div>
                                 <div class="strategy-details">
@@ -1539,7 +1471,10 @@
                             <div class="solver-times">
                                 <div class="solver-time">
                                     <div class="solver-name">CIM (QBoson)</div>
-                                    <div class="time-bar" style="width: 1%">4.06 μs</div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div class="time-bar" style="width: 1px; min-width: 1px;"></div>
+                                            <div style="color: red; font-weight: bold;">4.06 μs</div>
+                                    </div>
                                 </div>
                                 <div class="solver-time">
                                     <div class="solver-name">SCIP</div>
